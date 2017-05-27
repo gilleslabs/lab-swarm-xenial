@@ -18,8 +18,9 @@ sudo mount -t nfs -o nolock 10.100.193.100:/convoy-nfs /convoy-nfs
 sudo mount -t nfs -o nolock 10.100.193.100:/nfs-share /nfs-share
 sudo mount -t nfs -o nolock 10.100.193.100:/demo /demo
 
-sudo cp /vagrant/convoy /etc/systemd/system/convoy.service
-sudo chmod 755 /etc/systemd/system/convoy.service
+sudo cp /vagrant/convoy /lib/systemd/system/convoy.service
+sudo chmod 644 /lib/systemd/system/convoy.service
+sudo ln -s /lib/systemd/system/convoy.service /etc/systemd/system/convoy.service
 sudo systemctl daemon-reload
 sudo systemctl enable convoy.service
 sudo service convoy start

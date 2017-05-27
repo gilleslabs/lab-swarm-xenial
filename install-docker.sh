@@ -45,7 +45,7 @@ sudo pip install docker-compose
 
 	################     Updating host and ufw                ###################
 	
-
+sudo systemctl enable docker
 sudo ufw --force enable
 
 sudo sed -i 's|DEFAULT_FORWARD_POLICY="DROP"|DEFAULT_FORWARD_POLICY="ACCEPT"|g' /etc/default/ufw
