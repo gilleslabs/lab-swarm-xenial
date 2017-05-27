@@ -20,7 +20,6 @@ sudo mount -t nfs -o nolock 10.100.193.100:/demo /demo
 
 sudo cp /vagrant/convoy /lib/systemd/system/convoy.service
 sudo chmod 644 /lib/systemd/system/convoy.service
-sudo ln -s /lib/systemd/system/convoy.service /etc/systemd/system/convoy.service
 sudo systemctl daemon-reload
 sudo systemctl enable convoy.service
 sudo service convoy start
@@ -32,6 +31,7 @@ sudo echo 10.100.193.100:/demo /demo nfs auto,nolock >> /etc/fstab
 ## Dummy workaround to register convoy volume
 docker volume create -d convoy test
 docker volume rm test
-sudo update-rc.d cron defaults
+sudo systemctl enable cron.service
+sudo service cron start
 sudo echo @reboot docker volume create -d convoy test && docker volume rm test >> /etc/crontab
 sudo echo \*\/15 \* \* \* \* root docker volume create -d convoy test \&\& docker volume rm test >> /etc/crontab
