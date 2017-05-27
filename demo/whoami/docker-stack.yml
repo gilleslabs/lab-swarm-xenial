@@ -1,0 +1,24 @@
+version: "3"
+services:
+  web:
+    image: emilevauge/whoami
+    deploy:
+     placement:
+        constraints: 
+         - node.role == worker
+         - node.labels.zone != dmz
+     labels:
+      - "traefik.port=80"
+      - "traefik.docker.network=traefik_traefik-net"
+      - "traefik.frontend.rule=Host:whoami.example.com"
+    networks:
+      - web
+      - traefik_traefik-net
+networks:
+  traefik_traefik-net:
+    external: true
+  web:
+     driver: overlay
+     ipam:
+      config:
+      - subnet: 172.26.0.0/24

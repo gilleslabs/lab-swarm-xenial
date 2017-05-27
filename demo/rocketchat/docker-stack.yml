@@ -1,0 +1,81 @@
+version: '3'
+
+services:
+  rocketchat:
+    image: rocketchat/rocket.chat:latest
+    networks:
+     - rocket
+     - traefik_traefik-net
+    restart: unless-stopped
+    volumes:
+      - uploads:/app/uploads
+    environment:
+      - PORT=3000
+      - ROOT_URL=http://rocket.example.com:3000
+      - MONGO_URL=mongodb://mongo:27017/rocketchat
+      - MONGO_OPLOG_URL=mongodb://mongo:27017/local
+      - MAIL_URL=smtp://smtp.email
+#       - HTTP_PROXY=http://proxy.domain.com
+#       - HTTPS_PROXY=http://proxy.domain.com
+    depends_on:
+      - mongo
+    deploy:
+     placement:
+        constraints: [node.labels.zone == internal]
+     labels:
+       - "traefik.port=3000"
+       - "traefik.docker.network=traefik_traefik-net"
+       - "traefik.frontend.rule=Host: rocket.example.com"
+
+  mongo:
+    image: mongo:3.2
+    restart: unless-stopped
+    networks:
+     - rocket
+    volumes:
+     - data:/data/db
+     #- ./data/dump:/dump
+    command: mongod --smallfiles --oplogSize 128 --replSet rs0
+    deploy:
+      placement:
+        constraints: [node.labels.zone == internal]
+      labels:
+        - "traefik.enable=false"
+  # hubot, the popular chatbot (add the bot user first and change the password before starting this image)
+  hubot:
+    image: rocketchat/hubot-rocketchat:latest
+    restart: unless-stopped
+    environment:
+      - ROCKETCHAT_URL=rocketchat:3000
+      - ROCKETCHAT_ROOM=GENERAL
+      - ROCKETCHAT_USER=bot
+      - ROCKETCHAT_PASSWORD=botpassword
+      - BOT_NAME=bot
+  # you can add more scripts as you'd like here, they need to be installable by npm
+      - EXTERNAL_SCRIPTS=hubot-help,hubot-seen,hubot-links,hubot-diagnostics
+    depends_on:
+      - rocketchat
+    deploy:
+      placement:
+        constraints: [node.labels.zone == internal]
+      labels:
+        - "traefik.enable=false"
+    volumes:
+      - scripts:/home/hubot/scripts
+    networks:
+     - rocket
+networks:
+  traefik_traefik-net:
+    external: true
+  rocket:
+     driver: overlay
+     ipam:
+      config:
+      - subnet: 172.130.0.0/24
+volumes:
+  uploads:
+   driver: convoy
+  data:
+   driver: convoy
+  scripts:
+   driver: convoy

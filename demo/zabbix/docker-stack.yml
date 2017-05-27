@@ -1,0 +1,67 @@
+version: "3"
+services:
+  zabbix-agent:
+    image: zabbix/zabbix-agent
+    deploy:
+     mode: global
+    environment:
+       - ZBX_SERVER_HOST=zabbix-server
+    networks:
+      - zabbix
+  zabbix-db:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+    volumes:
+      - zabbix-db:/var/lib/mysql
+    networks:
+      - zabbix
+    deploy:
+     placement:
+        constraints: [node.labels.zone == internal]
+  zabbix-server:
+    image: zabbix/zabbix-server-mysql
+    environment:
+      - DB_SERVER_HOST=zabbix-db
+      - MYSQL_ROOT_PASSWORD=secret
+    depends_on:
+     - zabbix-db
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+    networks:
+      - zabbix
+    deploy:
+     placement:
+        constraints: [node.labels.zone == internal]
+  zabbix:
+    image: zabbix/zabbix-web-nginx-mysql
+    environment:
+      - DB_SERVER_HOST=zabbix-db
+      - MYSQL_USER=zabbix
+      - MYSQL_PASSWORD=zabbix
+      - ZBX_SERVER_HOST=zabbix-server
+    depends_on:
+     - zabbix-server
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+    networks:
+      - zabbix
+      - traefik_traefik-net
+    deploy:
+     placement:
+        constraints: [node.role == manager]
+     labels:
+      - "traefik.port=80"
+      - "traefik.docker.network=traefik_traefik-net"
+      - "traefik.frontend.rule=Host:zabbix.example.com"
+networks:
+  traefik_traefik-net:
+    external: true
+  zabbix:
+     driver: overlay
+     ipam:
+      config:
+      - subnet: 172.32.0.0/24
+volumes:
+  zabbix-db:
+   driver: convoy 
