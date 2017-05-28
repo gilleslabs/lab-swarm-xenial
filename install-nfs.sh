@@ -27,4 +27,4 @@ sudo echo /demo *\(rw,sync,no_root_squash\) >> /etc/exports
 sudo echo ALL:ALL >> /etc/hosts.allow
 sudo service nfs-kernel-server start
 sudo exportfs -u
-
+sudo service nfs-kernel-server restart
