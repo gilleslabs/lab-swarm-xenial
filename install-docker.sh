@@ -39,7 +39,7 @@ sudo systemctl enable docker.service
 
 sudo service docker start
 sudo groupadd docker
-sudo usermod -aG docker vagrant
+sudo usermod -aG docker ubuntu
 
 ################     Installing Docker-Compose            ###################
 

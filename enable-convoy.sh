@@ -24,7 +24,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable convoy.service
 sudo service convoy start
 
-sudo echo 10.100.193.100:/convoy-nfs /convoy-nfs nfs auto,nolock > /etc/fstab
+sudo echo 10.100.193.100:/convoy-nfs /convoy-nfs nfs auto,nolock >> /etc/fstab
 sudo echo 10.100.193.100:/nfs-share /nfs-share nfs auto,nolock >> /etc/fstab
 sudo echo 10.100.193.100:/demo /demo nfs auto,nolock >> /etc/fstab
 
