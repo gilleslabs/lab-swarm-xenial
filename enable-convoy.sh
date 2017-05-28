@@ -9,10 +9,10 @@ sudo bash -c 'echo "unix:///var/run/convoy/convoy.sock" > /etc/docker/plugins/co
 sudo service docker restart
 
 ## Dummy workaround to register convoy volume
-
-sudo mkdir /convoy-nfs
-sudo mkdir /nfs-share
-sudo mkdir /demo
+sudo apt-get install nfs-common
+sudo mkdir -p /convoy-nfs
+sudo mkdir -p /nfs-share
+sudo mkdir -p /demo
 
 sudo mount -t nfs -o nolock 10.100.193.100:/convoy-nfs /convoy-nfs
 sudo mount -t nfs -o nolock 10.100.193.100:/nfs-share /nfs-share
