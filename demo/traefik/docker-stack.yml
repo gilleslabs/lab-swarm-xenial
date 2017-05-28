@@ -45,18 +45,7 @@ services:
        - "traefik.docker.network=traefik_traefik-net"
        - "traefik.frontend.rule=Host:swarm.example.com"
 networks:
-    traefik_default:
-     driver: overlay
-     ipam:
-      config:
-      - subnet: 172.24.0.0/24
     traefik-net:
      driver: overlay
-     ipam:
-      config:
-      - subnet: 172.25.0.0/24
     socat:
      driver: overlay
-     ipam:
-      config:
-      - subnet: 172.23.0.0/24

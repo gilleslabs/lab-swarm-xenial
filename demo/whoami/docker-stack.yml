@@ -19,6 +19,3 @@ networks:
     external: true
   web:
      driver: overlay
-     ipam:
-      config:
-      - subnet: 172.26.0.0/24

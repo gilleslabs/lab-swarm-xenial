@@ -17,6 +17,3 @@ networks:
     external: true
   jenkins:
      driver: overlay
-     ipam:
-      config:
-      - subnet: 172.29.0.0/24
