@@ -20,9 +20,6 @@ networks:
     external: true
   hpoo:
      driver: overlay
-     ipam:
-      config:
-      - subnet: 172.129.0.0/24
 volumes:
   postgre:
    driver: convoy

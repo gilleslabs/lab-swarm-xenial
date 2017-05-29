@@ -33,9 +33,6 @@ networks:
     external: true
   wordpress:
      driver: overlay
-     ipam:
-      config:
-      - subnet: 172.27.0.0/24
 volumes:
   wp_data:
    driver: convoy

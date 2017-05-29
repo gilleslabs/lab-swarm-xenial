@@ -58,9 +58,6 @@ networks:
     external: true
   zabbix:
      driver: overlay
-     ipam:
-      config:
-      - subnet: 172.32.0.0/24
 volumes:
   zabbix-db:
    driver: convoy 

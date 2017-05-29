@@ -91,6 +91,7 @@ services:
         constraints: [node.labels.zone == internal]
 networks:
     voteapp:
+      driver: overlay
     traefik_traefik-net:
       external: true
 volumes:

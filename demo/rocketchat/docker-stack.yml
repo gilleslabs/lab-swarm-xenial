@@ -67,9 +67,6 @@ networks:
     external: true
   rocket:
      driver: overlay
-     ipam:
-      config:
-      - subnet: 172.130.0.0/24
 volumes:
   uploads:
    driver: convoy
