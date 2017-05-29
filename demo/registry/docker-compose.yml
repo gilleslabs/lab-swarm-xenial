@@ -8,7 +8,7 @@ services:
     environment:
       - REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt
       - REGISTRY_HTTP_TLS_KEY=/certs/domain.key
-      - REGISTRY_PROXY_REMOTEURL=https://registry-1.docker.io
+      - REGISTRY_PROXY_REMOTEURL= https://registry-1.docker.io
     volumes:
       - data:/var/lib/registry
       - /certs:/certs

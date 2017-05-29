@@ -10,7 +10,6 @@ services:
      labels:
       - "traefik.port=80"
       - "traefik.docker.network=traefik_traefik-net"
-      - "traefik.frontend.rule=Host:wordpress.example.com"
     environment:
        - WORDPRESS_DB_PASSWORD=pAssw0rd
     volumes:

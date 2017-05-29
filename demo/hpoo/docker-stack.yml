@@ -8,7 +8,6 @@ services:
      labels:
       - "traefik.port=8080"
       - "traefik.docker.network=traefik_traefik-net"
-      - "traefik.frontend.rule=Host:hpoo.example.com"
     networks:
       - hpoo
       - traefik_traefik-net
