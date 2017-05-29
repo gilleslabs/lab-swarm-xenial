@@ -9,12 +9,12 @@ Vagrant.configure(2) do |config|
   end
  
   config.vm.define "repo-server" do |d|
-    d.vm.box = "ubuntu/xenial64"
+    d.vm.box = "bento/ubuntu-16.04"
     d.vm.hostname = "repo-server"
     d.vm.network "private_network", ip: "10.100.194.10"
 	d.vm.network "private_network", ip: "10.100.193.10"
 	d.vm.provision :shell, inline: "sudo echo nameserver 8.8.8.8 > /run/resolvconf/resolv.conf"
-	d.vm.provision :shell, inline: "echo ubuntu:ubuntu | sudo chpasswd"
+#	d.vm.provision :shell, inline: "echo ubuntu:ubuntu | sudo chpasswd"
     d.vm.provision :shell, path: "install-docker.sh"
 	d.vm.provision :shell, path: "install-apt-cache.sh"
 	d.vm.provision :shell, path: "setup-registry.sh"
@@ -26,12 +26,12 @@ Vagrant.configure(2) do |config|
 
  
   config.vm.define "infra-server" do |d|
-    d.vm.box = "ubuntu/xenial64"
+    d.vm.box = "bento/ubuntu-16.04"
     d.vm.hostname = "infra-server"
     d.vm.network "private_network", ip: "10.100.194.100"
 	d.vm.network "private_network", ip: "10.100.193.100"
     d.vm.provision :shell, inline: "sudo echo 10.100.193.10  registry.infra.local >> /etc/hosts"
-	d.vm.provision :shell, inline: "echo ubuntu:ubuntu | sudo chpasswd"
+#	d.vm.provision :shell, inline: "echo ubuntu:ubuntu | sudo chpasswd"
 	d.vm.provision :shell, path: "set-apt-cache.sh"
     d.vm.provision :shell, path: "install-docker.sh"
 	d.vm.provision :shell, path: "set-registry.sh"
@@ -46,12 +46,12 @@ Vagrant.configure(2) do |config|
   end
   
   config.vm.define "manager-1" do |d|
-    d.vm.box = "ubuntu/xenial64"
+    d.vm.box = "bento/ubuntu-16.04"
 	d.vm.hostname = "manager-1"
     d.vm.network "private_network", ip: "10.100.192.200"
 	d.vm.network "private_network", ip: "10.100.193.200"
 	d.vm.provision :shell, inline: "sudo echo nameserver 10.100.194.100 > /run/resolvconf/resolv.conf"
-	d.vm.provision :shell, inline: " echo ubuntu:ubuntu | sudo chpasswd"
+#	d.vm.provision :shell, inline: " echo ubuntu:ubuntu | sudo chpasswd"
     d.vm.provision :shell, path: "vagrant-dns-patch.sh"
 	d.vm.provision :shell, path: "set-apt-cache.sh"
     d.vm.provision :shell, path: "install-docker.sh"
@@ -69,12 +69,12 @@ Vagrant.configure(2) do |config|
   
   (1..3).each do |i|
     config.vm.define "worker-#{i}" do |d|
-      d.vm.box = "ubuntu/xenial64"
+      d.vm.box = "bento/ubuntu-16.04"
       d.vm.hostname = "worker-#{i}"
       d.vm.network "private_network", ip: "10.100.192.20#{i}"
 	  d.vm.network "private_network", ip: "10.100.193.20#{i}"
 	  d.vm.provision :shell, inline: "sudo echo nameserver 10.100.194.100 > /run/resolvconf/resolv.conf"
-	  d.vm.provision :shell, inline: " echo ubuntu:ubuntu | sudo chpasswd"
+#	  d.vm.provision :shell, inline: " echo ubuntu:ubuntu | sudo chpasswd"
       d.vm.provision :shell, path: "vagrant-dns-patch.sh"
 	  d.vm.provision :shell, path: "set-apt-cache.sh"
       d.vm.provision :shell, path: "install-docker.sh"
@@ -91,12 +91,12 @@ Vagrant.configure(2) do |config|
   
   (1..2).each do |i|
     config.vm.define "dmz-#{i}" do |d|
-      d.vm.box = "ubuntu/xenial64"
+      d.vm.box = "bento/ubuntu-16.04"
       d.vm.hostname = "dmz-#{i}"
       d.vm.network "private_network", ip: "10.100.195.22#{i}"
 	  d.vm.network "private_network", ip: "10.100.193.22#{i}"
 	  d.vm.provision :shell, inline: "sudo echo nameserver 10.100.194.100 > /run/resolvconf/resolv.conf"
-	  d.vm.provision :shell, inline: " echo ubuntu:ubuntu | sudo chpasswd"
+#	  d.vm.provision :shell, inline: " echo ubuntu:ubuntu | sudo chpasswd"
       d.vm.provision :shell, path: "vagrant-dns-patch.sh"
 	  d.vm.provision :shell, path: "set-apt-cache.sh"
       d.vm.provision :shell, path: "install-docker.sh"
@@ -113,12 +113,12 @@ Vagrant.configure(2) do |config|
   
   (2..3).each do |i|
     config.vm.define "manager-#{i}" do |d|
-      d.vm.box = "ubuntu/xenial64"
+      d.vm.box = "bento/ubuntu-16.04"
       d.vm.hostname = "manager-#{i}"
       d.vm.network "private_network", ip: "10.100.192.21#{i}"
 	  d.vm.network "private_network", ip: "10.100.193.21#{i}"
 	  d.vm.provision :shell, inline: "sudo echo nameserver 10.100.194.100 > /run/resolvconf/resolv.conf"
-	  d.vm.provision :shell, inline: " echo ubuntu:ubuntu | sudo chpasswd"
+#	  d.vm.provision :shell, inline: " echo ubuntu:ubuntu | sudo chpasswd"
       d.vm.provision :shell, path: "vagrant-dns-patch.sh"
 	  d.vm.provision :shell, path: "set-apt-cache.sh"
       d.vm.provision :shell, path: "install-docker.sh"
