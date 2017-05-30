@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo cat /vagrant/eth0 > /etc/network/interfaces.d/enp0s3.cfg
+sudo echo supersede domain-name-servers 10.100.194.100\; >> /etc/dhcp/dhclient.conf
