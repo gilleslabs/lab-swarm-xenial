@@ -1,0 +1,23 @@
+version: "3"
+services:
+  itop:
+    image: vbkunin/itop
+    deploy:
+     placement:
+        constraints: [node.labels.zone == internal]
+     labels:
+      - "traefik.port=80"
+      - "traefik.docker.network=traefik_traefik-net"
+    networks:
+      - itop
+      - traefik_traefik-net
+    volumes:
+      - itop_app:/app
+networks:
+  traefik_traefik-net:
+    external: true
+  itop:
+     driver: overlay
+volumes:
+  itop_app:
+   driver: convoy
