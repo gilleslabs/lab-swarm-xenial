@@ -46,6 +46,10 @@ services:
        - "traefik.frontend.rule=Host:swarm.example.com"
 networks:
     traefik-net:
+     internal: true
      driver: overlay
+     driver_opts:
+      encrypted: "true"
     socat:
+     internal: true
      driver: overlay
