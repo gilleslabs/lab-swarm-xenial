@@ -63,6 +63,8 @@ sudo ufw allow 7946/tcp
 sudo ufw allow 4789/udp
 ###### Catching IP address of eth1
 ip=$(ifconfig enp0s9 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+#### enabling ipsec
+sudo ufw allow to $ip proto esp
 
 #### Make docker listening on unix socket and eth1
 sudo mkdir -p /etc/systemd/system/docker.service.d
