@@ -53,4 +53,6 @@ networks:
     socat:
      internal: true
      driver: overlay
+     driver_opts:
+      encrypted: "true"
 
