@@ -33,6 +33,8 @@ networks:
     external: true
   wordpress:
      driver: overlay
+     driver_opts:
+      encrypted: "true"
 volumes:
   wp_data:
    driver: convoy
