@@ -18,8 +18,9 @@ Vagrant.configure(2) do |config|
     d.vm.provision :shell, path: "install-docker.sh"
 	d.vm.provision :shell, path: "install-apt-cache.sh"
 	d.vm.provision :shell, path: "setup-registry.sh"
+	d.vm.provision :shell, path: "install-graylog.sh"
 	d.vm.provider "virtualbox" do |v|
-      v.memory = 1024
+      v.memory = 2048
 	  v.cpus = 2
     end
   end 
@@ -33,6 +34,7 @@ Vagrant.configure(2) do |config|
     d.vm.provision :shell, inline: "sudo echo 10.100.193.10  registry.infra.local >> /etc/hosts"
 	#d.vm.provision :shell, path: "uid-remap.sh"
 	d.vm.provision :shell, path: "set-apt-cache.sh"
+	d.vm.provision :shell, path: "setup-rsyslog.sh"
     d.vm.provision :shell, path: "install-docker.sh"
 	d.vm.provision :shell, path: "set-registry.sh"
     d.vm.provision :shell, path: "install-nfs.sh"
@@ -54,6 +56,7 @@ Vagrant.configure(2) do |config|
 	#d.vm.provision :shell, path: "uid-remap.sh"
     d.vm.provision :shell, path: "vagrant-dns-patch.sh"
 	d.vm.provision :shell, path: "set-apt-cache.sh"
+	d.vm.provision :shell, path: "setup-rsyslog.sh"
     d.vm.provision :shell, path: "install-docker.sh"
 	d.vm.provision :shell, path: "set-registry.sh"
 	d.vm.provision :shell, path: "enable-convoy.sh"
@@ -76,6 +79,7 @@ Vagrant.configure(2) do |config|
 	  d.vm.provision :shell, inline: "sudo echo nameserver 10.100.194.100 > /run/resolvconf/resolv.conf"
 	  #d.vm.provision :shell, path: "uid-remap.sh"
       d.vm.provision :shell, path: "vagrant-dns-patch.sh"
+	  d.vm.provision :shell, path: "setup-rsyslog.sh"
 	  d.vm.provision :shell, path: "set-apt-cache.sh"
       d.vm.provision :shell, path: "install-docker.sh"
 	  d.vm.provision :shell, path: "set-registry.sh"
@@ -98,6 +102,7 @@ Vagrant.configure(2) do |config|
 	  d.vm.provision :shell, inline: "sudo echo nameserver 10.100.194.100 > /run/resolvconf/resolv.conf"
 	  #d.vm.provision :shell, path: "uid-remap.sh"
       d.vm.provision :shell, path: "vagrant-dns-patch.sh"
+	  d.vm.provision :shell, path: "setup-rsyslog.sh"
 	  d.vm.provision :shell, path: "set-apt-cache.sh"
       d.vm.provision :shell, path: "install-docker.sh"
 	  d.vm.provision :shell, path: "set-registry.sh"
@@ -121,6 +126,7 @@ Vagrant.configure(2) do |config|
 	  #d.vm.provision :shell, path: "uid-remap.sh"
       d.vm.provision :shell, path: "vagrant-dns-patch.sh"
 	  d.vm.provision :shell, path: "set-apt-cache.sh"
+	  d.vm.provision :shell, path: "setup-rsyslog.sh"
       d.vm.provision :shell, path: "install-docker.sh"
 	  d.vm.provision :shell, path: "set-registry.sh"
 	  d.vm.provision :shell, path: "enable-convoy.sh"
