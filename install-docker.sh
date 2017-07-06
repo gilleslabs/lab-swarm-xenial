@@ -71,7 +71,7 @@ sudo mkdir -p /etc/systemd/system/docker.service.d
 sudo tee /etc/systemd/system/docker.service.d/docker.conf<<DOG
 [Service]
 ExecStart=
-ExecStart=/usr/bin/docker daemon -H fd:// \$DOCKER_OPTS
+ExecStart=/usr/bin/dockerd -H fd:// \$DOCKER_OPTS
 EnvironmentFile=-/etc/default/docker
 DOG
 sudo echo DOCKER_OPTS=\"-D --tls=false --experimental -H unix:///var/run/docker.sock -H tcp://$ip:2375\" >> /etc/default/docker
